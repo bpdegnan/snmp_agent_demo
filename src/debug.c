@@ -30,6 +30,11 @@
 #include <p32xxxx.h>
 #include "debug.h"
 
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <strings.h>
+#include <sys/types.h>
 
 /**
  * @brief Debug UART initialization

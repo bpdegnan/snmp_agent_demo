@@ -289,7 +289,7 @@ void ledTask(void)
  * @return Unused value
  **/
 
-int_t main(void)
+int32_t main(void)
 {
    error_t error;
    size_t oidLen;
@@ -311,6 +311,7 @@ int_t main(void)
    //Configure debug UART
    debugInit(115200);
 
+#ifdef PUNIXDEBUG
    //Start-up message
    TRACE_INFO("\r\n");
    TRACE_INFO("**********************************\r\n");
@@ -321,6 +322,7 @@ int_t main(void)
    TRACE_INFO("Target: PIC32MZ2048EFM144\r\n");
    TRACE_INFO("\r\n");
 
+#endif
    //Configure I/Os
    ioInit();
 
@@ -330,7 +332,9 @@ int_t main(void)
    if(error)
    {
       //Debug message
+      #ifdef PUNIXDEBUG
       TRACE_ERROR("Failed to initialize MIB!\r\n");
+      #endif
    }
 
    //Private MIB initialization
@@ -339,7 +343,9 @@ int_t main(void)
    if(error)
    {
       //Debug message
+      #ifdef PUNIXDEBUG
       TRACE_ERROR("Failed to initialize MIB!\r\n");
+      #endif
    }
 
    //TCP/IP stack initialization
@@ -347,8 +353,10 @@ int_t main(void)
    //Any error to report?
    if(error)
    {
+   #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to initialize TCP/IP stack!\r\n");
+      #endif
    }
 
    //Configure the first Ethernet interface
@@ -377,8 +385,10 @@ int_t main(void)
    //Any error to report?
    if(error)
    {
+   #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to configure interface %s!\r\n", interface->name);
+      #endif
    }
 
 #if (IPV4_SUPPORT == ENABLED)
@@ -397,8 +407,10 @@ int_t main(void)
    //Failed to initialize DHCP client?
    if(error)
    {
+   #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to initialize DHCP client!\r\n");
+      #endif
    }
 
    //Start DHCP client
@@ -406,8 +418,10 @@ int_t main(void)
    //Failed to start DHCP client?
    if(error)
    {
+   #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to start DHCP client!\r\n");
+      #endif
    }
 #else
    //Set IPv4 host address
@@ -442,8 +456,10 @@ int_t main(void)
    //Failed to initialize SLAAC?
    if(error)
    {
+      #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to initialize SLAAC!\r\n");
+      #endif
    }
 
    //Start IPv6 address autoconfiguration process
@@ -451,8 +467,10 @@ int_t main(void)
    //Failed to start SLAAC process?
    if(error)
    {
+   #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to start SLAAC!\r\n");
+      #endif
    }
 #else
    //Set link-local address
@@ -500,8 +518,10 @@ int_t main(void)
    //Failed to initialize SNMP agent?
    if(error)
    {
+   #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to initialize SNMP agent!\r\n");
+      #endif
    }
 
    //Load standard MIB-II
@@ -545,8 +565,10 @@ int_t main(void)
    //Failed to start SNMP agent?
    if(error)
    {
+   #ifdef PUNIXDEBUG
       //Debug message
       TRACE_ERROR("Failed to start SNMP agent!\r\n");
+      #endif
    }
 
    //Initialize Timer1
@@ -603,8 +625,10 @@ void dhcpClientStateChangeCallback(DhcpClientContext *context,
       //Failed to send trap message?
       if(error)
       {
+      #ifdef PUNIXDEBUG
          //Debug message
          TRACE_ERROR("Failed to send SNMP trap message!\r\n");
+         #endif
       }
    }
 

@@ -49,9 +49,10 @@ static OsMutex privateMibMutex;
 
 error_t privateMibInit(void)
 {
+#ifdef PUNIXDEBUG
    //Debug message
    TRACE_INFO("Initializing private MIB base...\r\n");
-
+#endif
    //Clear private MIB base
    memset(&privateMibBase, 0, sizeof(privateMibBase));
 
@@ -177,7 +178,7 @@ error_t privateMibSetLedEntry(const MibObject *object, const uint8_t *oid,
 {
    error_t error;
    size_t n;
-   uint_t index;
+   uint32_t index;
    PrivateMibLedEntry *entry;
 
    //Point to the end of the OID prefix
@@ -256,7 +257,7 @@ error_t privateMibGetLedEntry(const MibObject *object, const uint8_t *oid,
 {
    error_t error;
    size_t n;
-   uint_t index;
+   uint32_t index;
    PrivateMibLedEntry *entry;
 
    //Point to the end of the OID prefix
@@ -320,7 +321,7 @@ error_t privateMibGetNextLedEntry(const MibObject *object, const uint8_t *oid,
 {
    error_t error;
    size_t n;
-   uint_t index;
+   uint32_t index;
 
    //Make sure the buffer is large enough to hold the OID prefix
    if(*nextOidLen < object->oidLen)
